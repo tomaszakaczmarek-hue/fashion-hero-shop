@@ -41,7 +41,7 @@ function getStockInfo(productId: string): { inStock: boolean; lowStock: boolean;
   const quantity = (hash % 20) + 1;
   return {
     inStock: true,
-    lowStock: quantity <= 5,
+    lowStock: quantity < 5,
     quantity,
   };
 }
@@ -134,12 +134,9 @@ export function ProductInfo({ product }: ProductInfoProps) {
       {/* Stock indicator */}
       <div className="flex items-center gap-2">
         {stock.lowStock ? (
-          <>
-            <span className="inline-block w-2 h-2 rounded-full bg-amber-500" />
-            <span className="text-xs text-amber-700 font-medium">
-              Low Stock — Only {stock.quantity} left
-            </span>
-          </>
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-red-600 text-white text-[11px] font-semibold uppercase tracking-wide">
+            Only {stock.quantity} left in stock
+          </span>
         ) : (
           <>
             <span className="inline-block w-2 h-2 rounded-full bg-green-500" />

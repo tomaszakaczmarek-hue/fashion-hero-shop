@@ -9,11 +9,15 @@ function randomViewers(current: number): number {
 }
 
 export function ViewersWidget() {
-  const [count, setCount] = useState(() => Math.floor(Math.random() * 20) + 10);
+  const [count, setCount] = useState(20);
   const [bump, setBump] = useState(false);
-  const prevCount = useRef(count);
+  const prevCount = useRef(20);
 
   useEffect(() => {
+    const initial = Math.floor(Math.random() * 20) + 10;
+    prevCount.current = initial;
+    setCount(initial);
+
     const id = setInterval(() => {
       setCount((c) => {
         const next = randomViewers(c);

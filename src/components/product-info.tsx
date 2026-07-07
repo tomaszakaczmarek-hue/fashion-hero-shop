@@ -134,7 +134,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
       {/* Stock indicator */}
       <div className="flex items-center gap-2">
         {stock.lowStock ? (
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-red-600 text-white text-[11px] font-semibold uppercase tracking-wide">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full border border-red-600 text-red-600 text-[11px] font-semibold uppercase tracking-wide">
             Only {stock.quantity} left in stock
           </span>
         ) : (

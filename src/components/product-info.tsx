@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { useFeatureFlagEnabled } from "posthog-js/react";
 import type { Product, ProductColor } from "@/types";
 import { StarIcon, CheckIcon } from "@/components/icons";
 import { ColorSwatches } from "@/components/color-swatches";
@@ -60,6 +61,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const [selectedColor, setSelectedColor] = useState<ProductColor>(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const { addItem } = useCart();
+  const showReturnsBadge = useFeatureFlagEnabled("free-returns-badge");
 
   const stock = useMemo(() => getStockInfo(product.id), [product.id]);
   const seller = getSellerById(product.sellerId);
@@ -173,13 +175,15 @@ export function ProductInfo({ product }: ProductInfoProps) {
         {selectedSize ? "ADD TO CART - " + product.price + " zl" : "SELECT A SIZE"}
       </button>
 
-      {/* Free returns badge */}
-      <div className="flex items-center gap-2 rounded-lg border border-green-600 bg-green-50 px-3 py-2.5">
-        <CheckIcon className="h-4 w-4 flex-shrink-0 text-green-600" />
-        <span className="text-xs font-medium text-green-700">
-          Darmowy zwrot w 30 dni
-        </span>
-      </div>
+      {/* Free returns badge — A/B test via PostHog flag "free-returns-badge" */}
+      {showReturnsBadge && (
+        <div className="flex items-center gap-2 rounded-lg border border-green-600 bg-green-50 px-3 py-2.5">
+          <CheckIcon className="h-4 w-4 flex-shrink-0 text-green-600" />
+          <span className="text-xs font-medium text-green-700">
+            Darmowy zwrot w 30 dni
+          </span>
+        </div>
+      )}
 
       {/* Shipping info */}
       <div className="flex flex-col gap-2 pt-2 border-t border-border">

@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import type { Product, ProductColor } from "@/types";
-import { StarIcon } from "@/components/icons";
+import { StarIcon, CheckIcon } from "@/components/icons";
 import { ColorSwatches } from "@/components/color-swatches";
 import { SizeSelector } from "@/components/size-selector";
 import { useCart } from "@/components/cart-provider";
@@ -172,6 +172,14 @@ export function ProductInfo({ product }: ProductInfoProps) {
       >
         {selectedSize ? "ADD TO CART - " + product.price + " zl" : "SELECT A SIZE"}
       </button>
+
+      {/* Free returns badge */}
+      <div className="flex items-center gap-2 rounded-lg border border-green-600 bg-green-50 px-3 py-2.5">
+        <CheckIcon className="h-4 w-4 flex-shrink-0 text-green-600" />
+        <span className="text-xs font-medium text-green-700">
+          Darmowy zwrot w 30 dni
+        </span>
+      </div>
 
       {/* Shipping info */}
       <div className="flex flex-col gap-2 pt-2 border-t border-border">
